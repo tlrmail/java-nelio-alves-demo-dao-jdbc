@@ -50,15 +50,9 @@ public class SellerDaoJDBC implements SellerDao{
 			statement.setInt(1, id);
 			rs = statement.executeQuery();
 			if(rs.next()) {
-				Department department = new Department(rs.getInt("DepartmentId"), rs.getString("DepName"));
-				Integer id_seller = rs.getInt("Id");
-				String name = rs.getString("Name");
-				String email = rs.getString("Email");
-				Date birthDate = rs.getDate("BirthDate");
-				Double baseSalary = rs.getDouble("BaseSalary");
-				seller = new Seller(id_seller, name, email, birthDate, baseSalary, department);
+				Department department = instatiateDepartment(rs);
+				seller = instatiateSeller(rs, department);
 			}
-				
 		}catch(SQLException e) {
 			throw new DbException(e.getMessage());
 		}finally{
@@ -74,5 +68,19 @@ public class SellerDaoJDBC implements SellerDao{
 	public List<Seller> findAll() {
 		return null;
 	}
+
+	private Seller instatiateSeller(ResultSet rs, Department department) throws SQLException {
+		Integer id_seller = rs.getInt("Id");
+		String name = rs.getString("Name");
+		String email = rs.getString("Email");
+		Date birthDate = rs.getDate("BirthDate");
+		Double baseSalary = rs.getDouble("BaseSalary");
+		return new Seller(id_seller, name, email, birthDate, baseSalary, department);
+	}
+
+	private Department instatiateDepartment(ResultSet rs) throws SQLException{
+		return new Department(rs.getInt("DepartmentId"), rs.getString("DepName"));
+	}
+
 
 }
