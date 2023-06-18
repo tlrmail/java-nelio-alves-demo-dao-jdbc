@@ -9,7 +9,7 @@ import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 
-public class Sistema02 {
+public class SistemaSeller {
 
 	public static void main(String[] args) {
 
@@ -59,7 +59,7 @@ public class Sistema02 {
 		int id = input.nextInt();
 		sellerDao.deleteById(id);
 		System.out.println("Deleted completed!");
-
+		input.close();
 	}
 
 }
